@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright ${license.git.copyrightYears} the original author or authors. 
+	Licensed under the Apache License, Version 2.0 (the "License"); you may not 
+	use this file except in compliance with the License. You may obtain a copy 
+	of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<!-- Copyright ${license.git.copyrightYears} the original author or authors. 
+	Licensed under the Apache License, Version 2.0 (the "License"); you may not 
+	use this file except in compliance with the License. You may obtain a copy 
+	of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- 引入配置文件 -->
+	<properties resource="init.properties" />
+
+	<classPathEntry
+		location="D:\develop\maven\repon\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar" />
+
+	<!-- 一个数据库一个context -->
+	<context id="infoGuardian">
+
+		<property name="javaFileEncoding" value="UTF-8" />
+
+		<plugin type="com.wu.common.core.mybatis.plugin.CustomPlugin">
+			<property name="dbType" value="MYSQL" />
+		</plugin>
+
+		<!-- 注释 -->
+		<commentGenerator
+			type="com.wu.common.core.mybatis.comment.WuCommentGenerator">
+			<property name="suppressAllComments" value="false" /><!-- 是否取消注释 -->
+			<property name="addRemarkComments" value="true" />
+			<property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳 -->
+		</commentGenerator>
+
+		<!-- jdbc连接 -->
+		<jdbcConnection driverClass="${jdbc_driver}"
+			connectionURL="${jdbc_url}" userId="${jdbc_user}" password="${jdbc_password}" />
+
+		<!-- 类型转换 -->
+		<javaTypeResolver>
+			<!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 生成实体类地址 -->
+		<javaModelGenerator targetProject="${project}">
+			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+			<property name="enableSubPackages" value="false" />
+			<!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+			<property name="trimStrings" value="true" />
+			<property name="constructorBased" value="true" />
+			<property name="exampleType"
+				value="com.wu.common.core.mybatis.generator.ExampleGenerator" />
+			<property name="exampleInterface" value="com.wu.wuji.common.dao.AbstractExample" />
+			<property name="entitySuperInterface"
+				value="com.wu.wuji.common.permission.AbstractDataAuth" />
+			<property name="criteriaInterface"
+				value="com.wu.wuji.common.mybatis.generator.BaseCriteria" />
+		</javaModelGenerator>
+
+		<!-- 生成mapxml文件 -->
+		<sqlMapGenerator targetProject="src/main/resources">
+			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+
+		<!-- 生成mapxml对应client，也就是接口dao -->
+		<javaClientGenerator targetProject="${project}"
+			type="com.wu.common.core.mybatis.generator.JavaMapperGenerator">
+			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+			<property name="enableSubPackages" value="false" />
+			<property name="rootInterface" value="com.wu.wuji.common.dao.BaseMapper" />
+			<property name="blobInterface" value="com.wu.wuji.common.dao.BlobMapper" />
+			<property name="primaryInterface" value="com.wu.wuji.common.dao.PrimaryMapper" />
+		</javaClientGenerator>
+
+		<javaDTOGenerator targetProject="${project}">
+			<property name="rootClass" value="com.wu.wuji.common.dto.BaseDTO" />
+		</javaDTOGenerator>
+
+		<javaServiceGenerator targetProject="${project}">
+			<property name="rootInterface" value="com.wu.wuji.common.base.IBaseService" />
+			<property name="rootClass" value="com.wu.wuji.common.base.BaseService" />
+		</javaServiceGenerator>
+
+		<!-- 配置表信息 -->
+		<table schema="${jdbc_user}" tableName="route_conf"
+			domainObjectName="Route">
+			<property name="clientTargetPackage" value="com.wu.service.route1.dao" />
+			<property name="modelTargetPackage" value="com.wu.service.route1.entity" />
+			<property name="mapTargetPackage" value="META-INF/mappers1" />
+			<property name="dtoTargetPackage" value="com.wu.service.route1.dto" />
+			<property name="serviceTargetPackage" value="com.wu.service.route1.service" />
+		</table>
+
+	</context>
+</generatorConfiguration>
